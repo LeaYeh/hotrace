@@ -63,7 +63,7 @@ void	search(t_table **ht)
 			i = 0;
 			while (key[i] && key[i] != '\n')
 				ft_putchar_fd(key[i++], STDOUT_FILENO);
-			ft_putstr_fd(": Not found\n", STDOUT_FILENO);
+			ft_putstr_fd(": Not found.\n", STDOUT_FILENO);
 		}
 		save_free((void**)&key);
 	}
