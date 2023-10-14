@@ -1,10 +1,10 @@
+#include "hotrace.h"
+#include <fcntl.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <stdbool.h>
-#include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "hotrace.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t len)
 {
@@ -67,7 +67,7 @@ void	*ft_memset(void *dst, int val, size_t len)
 {
 	unsigned char	*ptr;
 
-	ptr = (unsigned char *) dst;
+	ptr = (unsigned char *)dst;
 	while (len-- > 0)
 		*ptr++ = (unsigned char)val;
 	return (dst);
@@ -75,7 +75,7 @@ void	*ft_memset(void *dst, int val, size_t len)
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void			*ptr;
+	void	*ptr;
 
 	ptr = (void *)malloc(size * count);
 	if (!ptr)
@@ -88,11 +88,11 @@ char	*ft_strchr(const char *s, int c)
 	while (*s)
 	{
 		if (*s == (unsigned char)c)
-			return ((char *) s);
+			return ((char *)s);
 		s++;
 	}
 	if (*s == (char)c)
-		return ((char *) s);
+		return ((char *)s);
 	return (NULL);
 }
 

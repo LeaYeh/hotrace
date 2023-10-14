@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "hotrace.h"
+#include <stdio.h>
 
 bool	is_empty(char *str)
 {
@@ -17,12 +17,12 @@ bool	gnl(int fd, char **line)
 	return (false);
 }
 
-int main()
+int	main(void)
 {
-	char    *line;
-	char    *key;
-	char    *value;
-	t_table *ht;
+	char	*line;
+	char	*key;
+	char	*value;
+	t_table	*ht;
 
 	ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
 	if (!ht)
@@ -36,10 +36,10 @@ int main()
 			break ;
 		key = line;
 		if (!gnl(STDIN_FILENO, &line) || is_empty(line))
-        {
-            perror("Error: Incomplete key-value pair in the file.");
-            return (-1);
-        }
+		{
+			perror("Error: Incomplete key-value pair in the file.");
+			return (-1);
+		}
 		value = line;
 		hash_table_insert(ht, key, value);
 		free(key);
