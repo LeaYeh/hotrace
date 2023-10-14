@@ -105,28 +105,6 @@ void	*hash_table_lookup(t_table *ht, const char *key)
 	return (NULL);
 }
 
-<<<<<<< Updated upstream
-=======
-void	hash_table_print(t_table *ht)
-{
-	uint32_t	i;
-	t_node		*current;
-
-	i = 0;
-	while (i < ht->size)
-	{
-		printf("Bucket %d:\n", i);
-		current = ht->elements[i];
-		while (current)
-		{
-			printf("  Key: %s, Value: %s\n", current->key, current->value);
-			current = current->next;
-		}
-		i++;
-	}
-}
-
->>>>>>> Stashed changes
 // int main() {
 // 	t_table *ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
 // 	hash_table_insert(ht, "key1", "value1");
