@@ -6,6 +6,10 @@
 # endif
 
 # ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4294967295
+# endif
+
+# ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
 
