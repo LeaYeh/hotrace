@@ -10,7 +10,7 @@ bool	is_empty(char *str)
 
 bool	gnl(int fd, char **line)
 {
-	*line = get_next_line(STDIN_FILENO);
+	*line = get_next_line(fd);
 	if (*line)
 		return (true);
 	return (false);
