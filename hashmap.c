@@ -1,6 +1,4 @@
 #include "hotrace.h"
-#include <stdio.h>
-#include <string.h>
 
 uint32_t	convert_hash(uint64_t hash)
 {
@@ -105,55 +103,6 @@ void	*hash_table_lookup(t_table *ht, const char *key)
 		current = current->next;
 	}
 	return (NULL);
-}
-
-void	*hash_table_delete(t_table *ht, const char *key)
-{
-	uint32_t	index;
-	t_node		*current;
-	t_node		*prev;
-	void		*value;
-
-	index = convert_hash(ht->hash(key));
-	current = ht->elements[index];
-	prev = NULL;
-	while (current)
-	{
-		if (ft_strncmp(key, current->key, ft_strlen(key)) == 0)
-		{
-			if (prev)
-				prev->next = current->next;
-			else
-				ht->elements[index] = current->next;
-			value = (void *)current->value;
-			free((char *)current->key);
-			free((char *)current->value);
-			free(current);
-			return (value);
-		}
-		prev = current;
-		current = current->next;
-	}
-	return (NULL);
-}
-
-void	hash_table_print(t_table *ht)
-{
-	uint32_t	i;
-	t_node		*current;
-
-	i = 0;
-	while (i < ht->size)
-	{
-		printf("Bucket %d:\n", i);
-		current = ht->elements[i];
-		while (current)
-		{
-			printf("  Key: %s, Value: %s\n", current->key, current->value);
-			current = current->next;
-		}
-		i++;
-	}
 }
 
 // int main() {
