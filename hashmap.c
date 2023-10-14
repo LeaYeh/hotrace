@@ -21,15 +21,15 @@ uint32_t    hash_djb2(const char *str)
 	return (hash);
 }
 
-h_table *hash_table_create(uint32_t size, hash_function *f) {
-	h_table *ht;
+t_table *hash_table_create(uint32_t size, hash_function *f) {
+	t_table *ht;
 
-	ht = (h_table *)malloc(sizeof(h_table));
+	ht = (t_table *)malloc(sizeof(t_table));
 	if (!ht)
 		return NULL;
 	ht->size = size;
 	ht->hash = f;
-	ht->elements = (h_node **)ft_calloc(size, sizeof(h_node *));
+	ht->elements = (t_node **)ft_calloc(size, sizeof(t_node *));
 	if (!ht->elements)
 	{
 		free(ht);
@@ -38,10 +38,10 @@ h_table *hash_table_create(uint32_t size, hash_function *f) {
 	return (ht);
 }
 
-void	hash_table_destroy(h_table *ht) {
+void	hash_table_destroy(t_table *ht) {
 	uint32_t	i;
-	h_node		*current;
-	h_node		*next;
+	t_node		*current;
+	t_node		*next;
 
 	i = 0;
 	while (i < ht->size) 
@@ -59,13 +59,13 @@ void	hash_table_destroy(h_table *ht) {
 	free(ht);
 }
 
-bool hash_table_insert(h_table *ht, const char *key, const char *value)
+bool hash_table_insert(t_table *ht, const char *key, const char *value)
 {
 	uint32_t	index;
-	h_node		*new_node;
+	t_node		*new_node;
 
 	index = convert_hash(ht->hash(key));
-	new_node = (h_node *)malloc(sizeof(h_node));
+	new_node = (t_node *)malloc(sizeof(t_node));
 	if (!new_node)
 		return (false);
 	new_node->key = ft_strdup(key);
@@ -86,9 +86,9 @@ bool hash_table_insert(h_table *ht, const char *key, const char *value)
 	return (true);
 }
 
-void	*hash_table_lookup(h_table *ht, const char *key) {
+void	*hash_table_lookup(t_table *ht, const char *key) {
 	uint32_t	index;
-	h_node		*current;
+	t_node		*current;
 
 	index = convert_hash(ht->hash(key));
 	current = ht->elements[index];
@@ -100,10 +100,10 @@ void	*hash_table_lookup(h_table *ht, const char *key) {
 	return (NULL);
 }
 
-void *hash_table_delete(h_table *ht, const char *key) {
+void *hash_table_delete(t_table *ht, const char *key) {
 	uint32_t	index;
-	h_node		*current;
-	h_node		*prev;
+	t_node		*current;
+	t_node		*prev;
 	void		*value;
 
 	index = convert_hash(ht->hash(key));
@@ -127,9 +127,9 @@ void *hash_table_delete(h_table *ht, const char *key) {
 	return (NULL);
 }
 
-void	hash_table_print(h_table *ht) {
+void	hash_table_print(t_table *ht) {
 	uint32_t	i;
-	h_node		*current;
+	t_node		*current;
 
 	i = 0;
 	while (i < ht->size) {
@@ -144,7 +144,7 @@ void	hash_table_print(h_table *ht) {
 }
 
 int main() {
-	h_table *ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
+	t_table *ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
 	hash_table_insert(ht, "key1", "value1");
 	hash_table_insert(ht, "key2", "value2");
 	hash_table_insert(ht, "key3", "value3");
