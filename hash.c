@@ -1,8 +1,66 @@
 #include <stdint.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "hotrace.h"
 
-uint32_t ft_murmur3_hash(const char *key, size_t len, uint32_t seed) {
+typedef struct s_murmur_tab
+{
+	uint32_t	c1;
+    uint32_t	c2;
+    uint32_t	r1;
+    uint32_t	r2;
+    uint32_t	m;
+    uint32_t	n;
+	uint32_t	nblocks;
+	uint32_t	*blocks;
+	uint32_t 	hash;
+}	t_murmur_tab;
+
+// error_code	ft_init_murmur_table(const char *key, size_t len, uint32_t seed)
+// {}
+
+t_murmur_tab	*init_murmur_table(const char *key, size_t len, uint32_t seed)
+{
+	t_murmur_tab *tab;
+
+	tab = (t_murmur_tab *)malloc(sizeof(t_murmur_tab) * 1);
+	if (!tab)
+		return (NULL);
+	tab->c1 = 0xcc9e2d51;
+	tab->c2 = 0x1b873593;
+	tab->r1 = 15;
+	tab->r2 = 13;
+	tab->m = 5;
+	tab->n = 0xe6546b64;
+	tab->nblocks = len / 4;
+	tab->blocks = (uint32_t *)key;
+	return (tab);
+}
+
+uint32_t ft_murmur3_hash(const char *key, size_t len, uint32_t seed)
+{
+	t_murmur_tab	*tab;
+	int				i;
+	int				tmp;
+
+	tab = init_murmur_table(key, len, seed);
+	i = 0;
+	while (i < tab->nblocks)
+	{
+		tmp = tab->blocks[i];
+		tmp *= tab->c1;
+		tmp = (tmp << tab->r1) | (tmp >> (32 - tab->r1));
+		tmp *= tab->c2;
+		tab->hash ^= tmp;
+        tab->hash = ((tab->hash << tab->r2) | (tab->hash >> (32 - tab->r2)));
+		tab->hash = tab->hash * tab->m + tab->n;
+	}
+	
+	free(tab);
+}
+
+uint32_t murmur3_hash(const char *key, size_t len, uint32_t seed) {
     // Constants for mixing
     const uint32_t c1 = 0xcc9e2d51;
     const uint32_t c2 = 0x1b873593;
@@ -60,6 +118,14 @@ uint32_t ft_murmur3_hash(const char *key, size_t len, uint32_t seed) {
     return hash;
 }
 
+uint32_t	ft_convert_hash(uint32_t hash)
+{
+	uint32_t	mask;
+
+	mask = (1 << MAX_HASH_SIZE) - 1;
+	return (hash & mask);
+}
+
 uint32_t	ft_djb_hash(const char *str)
 {
 	uint32_t hash = 5381;
@@ -68,13 +134,13 @@ uint32_t	ft_djb_hash(const char *str)
         hash = ((hash << 5) + hash) + (*str);
         str++;
     }
-    return (hash);
+    return (ft_convert_hash(hash));
 }
 
-int main() {
-    const char *message = "Hello, hash!";
+// int main() {
+//     const char *message = "Hello, hash!";
 
-    printf("djb for '%s': %u\n", message, ft_djb_hash(message));
-	printf("murmur3 for '%s': %u\n", message, ft_murmur3_hash(message, strlen(message), 4242));
-    return (0);
-}
+//     printf("djb for '%s': %u\n", message, ft_djb_hash(message));
+// 	printf("murmur3 for '%s': %u\n", message, ft_murmur3_hash(message, strlen(message), 4242));
+//     return (0);
+// }

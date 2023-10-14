@@ -1,0 +1,23 @@
+#ifndef HOTRACE_H
+# define HOTRACE_H
+
+# ifndef MAX_HASH_SIZE
+#  define MAX_HASH_SIZE 1024
+# endif
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+typedef enum {
+	ERROR_NONE = 0,
+	ERROR_INVALID_INPUT,
+	ERROR_FILE_NOT_FOUND,
+	ERROR_FILE_NOT_READABLE,
+	ERROR_FILE_NOT_WRITABLE,
+	ERROR_FORK_PROC_FAILED,
+	ERROR_MEM_ALLOC_FAILED,
+	ERROR_EXEC_FAILED
+} error_code;
+
+#endif
