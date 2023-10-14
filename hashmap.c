@@ -33,7 +33,7 @@ t_table	*hash_table_create(uint32_t size, hash_function *f)
 	ht->elements = (t_node **)ft_calloc(size, sizeof(t_node *));
 	if (!ht->elements)
 	{
-		free(ht);
+		save_free((void**)&ht);
 		return (NULL);
 	}
 	return (ht);
@@ -52,14 +52,14 @@ void	hash_table_destroy(t_table *ht)
 		while (current)
 		{
 			next = current->next;
-			free((char *)current->key);
-			free((char *)current->value);
-			free(current);
+			save_free((void**)&current->key);
+			save_free((void**)&current->value);
+			save_free((void**)&current);
 			current = next;
 		}
 	}
-	free(ht->elements);
-	free(ht);
+	save_free((void**)&ht->elements);
+	save_free((void**)&ht);
 }
 
 bool	hash_table_insert(t_table *ht, const char *key, const char *value)
@@ -74,14 +74,14 @@ bool	hash_table_insert(t_table *ht, const char *key, const char *value)
 	new_node->key = key;
 	if (!new_node->key)
 	{
-		free(new_node);
+		save_free((void**)&new_node);
 		return (false);
 	}
 	new_node->value = value;
 	if (!new_node->value)
 	{
-		free((void *)new_node->key);
-		free(new_node);
+		save_free((void**)&new_node->key);
+		save_free((void**)&new_node);
 		return (false);
 	}
 	new_node->next = ht->elements[index];
@@ -105,6 +105,28 @@ void	*hash_table_lookup(t_table *ht, const char *key)
 	return (NULL);
 }
 
+<<<<<<< Updated upstream
+=======
+void	hash_table_print(t_table *ht)
+{
+	uint32_t	i;
+	t_node		*current;
+
+	i = 0;
+	while (i < ht->size)
+	{
+		printf("Bucket %d:\n", i);
+		current = ht->elements[i];
+		while (current)
+		{
+			printf("  Key: %s, Value: %s\n", current->key, current->value);
+			current = current->next;
+		}
+		i++;
+	}
+}
+
+>>>>>>> Stashed changes
 // int main() {
 // 	t_table *ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
 // 	hash_table_insert(ht, "key1", "value1");

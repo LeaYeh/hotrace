@@ -31,7 +31,7 @@ typedef struct hash_node
 
 typedef struct hash_table
 {
-	u_int32_t			size;
+	uint32_t			size;
 	hash_function		*hash;
 	t_node				**elements;
 
@@ -58,5 +58,6 @@ void					ft_putchar_fd(char c, int fd);
 void					ft_putstr_fd(char *s, int fd);
 
 char					*get_next_line(int fd);
+void					save_free(void **f);
 
 #endif

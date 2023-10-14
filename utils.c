@@ -49,3 +49,12 @@ void	ft_putstr_fd(char *s, int fd)
 	while (s && *s)
 		ft_putchar_fd(*(s++), fd);
 }
+
+void	save_free(void **f)
+{
+	if (*f)
+	{
+		free(*f);
+		*f = NULL;
+	}
+}

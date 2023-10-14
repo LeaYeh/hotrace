@@ -10,7 +10,6 @@ bool	is_empty(char *str)
 
 bool	gnl(int fd, char **line)
 {
-	// safe_free(line);
 	*line = get_next_line(STDIN_FILENO);
 	if (*line)
 		return (true);
@@ -32,15 +31,15 @@ bool	build_hashmap(t_table **ht)
 	while (gnl(STDIN_FILENO, &line))
 	{
 		if (is_empty(line))
-		{free(line);
-			break ;}
+		{
+			free(line);
+			break ;
+		}
 		key = line;
 		if (!gnl(STDIN_FILENO, &line) || is_empty(line))
 			return (false);
 		value = line;
 		hash_table_insert(*ht, key, value);
-		// free(key);
-		// free(value);
 	}
 	return (true);
 }
@@ -57,7 +56,7 @@ void	search(t_table **ht)
 		if (value)
 		{
 			ft_putstr_fd(value, STDOUT_FILENO);
-			free(value);
+			save_free((void**)&key);
 		}
 		else
 		{
@@ -66,8 +65,7 @@ void	search(t_table **ht)
 				ft_putchar_fd(key[i++], STDOUT_FILENO);
 			ft_putstr_fd(": Not found\n", STDOUT_FILENO);
 		}
-		if (key)
-			free(key);
+		save_free((void**)&key);
 	}
 }
 
