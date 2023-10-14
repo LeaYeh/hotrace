@@ -24,7 +24,7 @@ typedef struct hash_table
 {
     u_int32_t size;
     hash_function *hash;
-    h_node **elements;
+    static h_node *elements[4294967295];
 
 }   h_table;
 
