@@ -93,3 +93,8 @@ int	main(void)
 	search(&ht);
 	hash_table_destroy(ht);
 }
+// [mac|MAX_HASH_BITS=10] ./hotrace < tests/test07.htr  35.27s user 20.26s system 98% cpu 56.131 total
+// [mac|MAX_HASH_BITS=16] ./hotrace < tests/test07.htr  9.33s user 20.43s system 97% cpu 30.394 total
+// [mac|MAX_HASH_BITS=18] ./hotrace < tests/test07.htr  8.87s user 20.32s system 96% cpu 30.382 total
+// [mac|MAX_HASH_BITS=20] ./hotrace < tests/test07.htr  8.76s user 20.35s system 97% cpu 29.968 total
+// [mac|MAX_HASH_BITS=30] ./hotrace < tests/test07.htr  15.99s user 23.52s system 93% cpu 42.174 total

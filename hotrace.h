@@ -15,8 +15,8 @@
 
 # include <stdio.h>
 
-# define MAX_HASH_BITS 4
-# define MAX_HASH_LEN 16
+# define MAX_HASH_BITS 16
+# define MAX_HASH_LEN 65536
 
 typedef					uint32_t(hash_function)(const char *);
 
