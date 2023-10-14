@@ -1,4 +1,4 @@
-#include "hashmap.h"
+#include "hotrace.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -143,33 +143,33 @@ void	hash_table_print(t_table *ht) {
 	}
 }
 
-int main() {
-	t_table *ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
-	hash_table_insert(ht, "key1", "value1");
-	hash_table_insert(ht, "key2", "value2");
-	hash_table_insert(ht, "key3", "value3");
+// int main() {
+// 	t_table *ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
+// 	hash_table_insert(ht, "key1", "value1");
+// 	hash_table_insert(ht, "key2", "value2");
+// 	hash_table_insert(ht, "key3", "value3");
 
-	printf("Hash Table:\n");
-	hash_table_print(ht);
+// 	printf("Hash Table:\n");
+// 	hash_table_print(ht);
 
-	const char *value = (const char *)hash_table_lookup(ht, "key2");
-	if (value) {
-		printf("Lookup result: key2 -> %s\n", value);
-	} else {
-		printf("Key not found\n");
-	}
+// 	const char *value = (const char *)hash_table_lookup(ht, "key2");
+// 	if (value) {
+// 		printf("Lookup result: key2 -> %s\n", value);
+// 	} else {
+// 		printf("Key not found\n");
+// 	}
 
-	void *deleted_value = hash_table_delete(ht, "key1");
-	if (deleted_value) {
-		printf("Deleted key1 -> %s\n", (const char *)deleted_value);
-	} else {
-		printf("Key not found for deletion\n");
-	}
+// 	void *deleted_value = hash_table_delete(ht, "key1");
+// 	if (deleted_value) {
+// 		printf("Deleted key1 -> %s\n", (const char *)deleted_value);
+// 	} else {
+// 		printf("Key not found for deletion\n");
+// 	}
 
-	printf("Updated Hash Table:\n");
-	hash_table_print(ht);
+// 	printf("Updated Hash Table:\n");
+// 	hash_table_print(ht);
 
-	hash_table_destroy(ht);
+// 	hash_table_destroy(ht);
 
-	return 0;
-}
+// 	return 0;
+// }
