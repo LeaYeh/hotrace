@@ -11,7 +11,7 @@ bool	is_empty(char *str)
 bool	gnl(int fd, char **line)
 {
 	*line = get_next_line(fd);
-	if (*line)
+	if (*line != NULL)
 		return (true);
 	return (false);
 }
@@ -37,8 +37,9 @@ bool	build_hashmap(t_table **ht)
 		}
 		key = line;
 		if (!gnl(STDIN_FILENO, &line) || is_empty(line))
-			return (false);
+			return (true);
 		value = line;
+		// printf("insert %s: %s\n", key, value);
 		hash_table_insert(*ht, key, value);
 	}
 	return (true);
@@ -52,6 +53,7 @@ void	search(t_table **ht)
 
 	while (gnl(STDIN_FILENO, &key))
 	{
+		// printf("searching key: %s", key);
 		value = (char *)hash_table_lookup(*ht, key);
 		if (value)
 		{
@@ -69,12 +71,25 @@ void	search(t_table **ht)
 	}
 }
 
+void hash_table_print(t_table *ht) {
+    for (uint32_t i = 0; i < ht->size; i++) {
+        printf("Bucket %d:\n", i);
+        t_node *current = ht->elements[i];
+        while (current) {
+            printf("  Key: %s, Value: %s\n", current->key, current->value);
+            current = current->next;
+        }
+    }
+}
+
 int	main(void)
 {
 	t_table	*ht;
 
 	if (!build_hashmap(&ht))
 		return (-1);
+	// hash_table_print(ht);
+	// printf("=======\n\n");
 	search(&ht);
 	hash_table_destroy(ht);
 }

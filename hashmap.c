@@ -67,6 +67,7 @@ bool	hash_table_insert(t_table *ht, const char *key, const char *value)
 	uint32_t	index;
 	t_node		*new_node;
 
+	remove_last_newline((char **)&key);
 	index = convert_hash(ht->hash(key));
 	new_node = (t_node *)malloc(sizeof(t_node));
 	if (!new_node)
@@ -89,16 +90,20 @@ bool	hash_table_insert(t_table *ht, const char *key, const char *value)
 	return (true);
 }
 
-void	*hash_table_lookup(t_table *ht, const char *key)
+void	*hash_table_lookup(t_table *ht, char *key)
 {
 	uint32_t	index;
 	t_node		*current;
 
+	remove_last_newline(&key);
+	// printf("\tgot key: %s", key);
 	index = convert_hash(ht->hash(key));
 	current = ht->elements[index];
+	// printf("\tindex: %d\n", index);
 	while (current)
 	{
-		if (ft_strncmp(key, current->key, ft_strlen(key)) == 0)
+		// printf("\tcompare %s\n", current->key);
+		if (ft_strncmp(key, current->key, ft_strlen(current->key)) == 0)
 			return ((void *)current->value);
 		current = current->next;
 	}

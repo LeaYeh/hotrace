@@ -3,10 +3,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# ifndef MAX_HASH_SIZE
-#  define MAX_HASH_SIZE 1024
-# endif
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
@@ -17,8 +13,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define MAX_HASH_BITS 8
-# define MAX_HASH_LEN 256
+# include <stdio.h>
+
+# define MAX_HASH_BITS 4
+# define MAX_HASH_LEN 16
 
 typedef					uint32_t(hash_function)(const char *);
 
@@ -42,7 +40,7 @@ void					hash_table_destroy(t_table *ht);
 void					hash_table_print(t_table *ht);
 bool					hash_table_insert(t_table *ht, const char *key,
 							const char *value);
-void					*hash_table_lookup(t_table *ht, const char *key);
+void					*hash_table_lookup(t_table *ht, char *key);
 void					*hash_table_delete(t_table *ht, const char *key);
 uint32_t				hash_djb2(const char *str);
 
@@ -59,5 +57,6 @@ void					ft_putstr_fd(char *s, int fd);
 
 char					*get_next_line(int fd);
 void					save_free(void **f);
+void					remove_last_newline(char **s);
 
 #endif

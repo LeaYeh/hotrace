@@ -3,14 +3,15 @@ SRCS	:= hotrace.c \
 		hashmap.c \
 		get_next_line.c \
 		utils.c \
-		string_utils.c
+		string_utils.c \
+		print_utils.c
 
 OBJS	= 	${SRCS:.c=.o}
 
 CC		= 	cc
 RM		= 	rm -f
 
-CFLAGS	= 	-Wall -Wextra -Werror
+CFLAGS	= 	-Wall -Wextra -Werror -g
 
 .c.o:
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
