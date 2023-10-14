@@ -116,3 +116,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	*(ptr + (s1_len + s2_len)) = '\0';
 	return (ptr);
 }
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+void	ft_putstr_fd(char *s, int fd)
+{
+	while (s && *s)
+		ft_putchar_fd(*(s++), fd);
+}
