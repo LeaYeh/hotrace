@@ -17,18 +17,17 @@ bool	gnl(int fd, char **line)
 	return (false);
 }
 
-int	main(void)
+bool	build_hashmap(t_table **ht)
 {
 	char	*line;
 	char	*key;
 	char	*value;
-	t_table	*ht;
 
-	ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
-	if (!ht)
+	*ht = hash_table_create(MAX_HASH_LEN, hash_djb2);
+	if (!*ht)
 	{
 		perror("Error: Create hash table failed.");
-		return (-1);
+		return (false);
 	}
 	while (gnl(STDIN_FILENO, &line))
 	{
@@ -36,18 +35,24 @@ int	main(void)
 			break ;
 		key = line;
 		if (!gnl(STDIN_FILENO, &line) || is_empty(line))
-		{
-			perror("Error: Incomplete key-value pair in the file.");
-			return (-1);
-		}
+			return (false);
 		value = line;
-		hash_table_insert(ht, key, value);
+		hash_table_insert(*ht, key, value);
 		free(key);
 		free(value);
 	}
+	return (true);
+}
+
+void	search(t_table **ht)
+{
+	int		i;
+	char	*key;
+	char	*value;
+
 	while (gnl(STDIN_FILENO, &key))
 	{
-		value = (char *)hash_table_lookup(ht, key);
+		value = (char *)hash_table_lookup(*ht, key);
 		if (value)
 		{
 			ft_putstr_fd(value, STDOUT_FILENO);
@@ -55,9 +60,20 @@ int	main(void)
 		}
 		else
 		{
-			ft_putstr_fd(key, STDOUT_FILENO);
+			i = 0;
+			while (key[i] && key[i] != '\n')
+				ft_putchar_fd(key[i++], STDOUT_FILENO);
 			ft_putstr_fd(": Not found\n", STDOUT_FILENO);
 		}
 	}
+}
+
+int	main(void)
+{
+	t_table	*ht;
+
+	if (!build_hashmap(&ht))
+		return (-1);
+	search(&ht);
 	hash_table_destroy(ht);
 }
