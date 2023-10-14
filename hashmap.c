@@ -73,13 +73,13 @@ bool	hash_table_insert(t_table *ht, const char *key, const char *value)
 	new_node = (t_node *)malloc(sizeof(t_node));
 	if (!new_node)
 		return (false);
-	new_node->key = ft_strdup(key);
+	new_node->key = key;
 	if (!new_node->key)
 	{
 		free(new_node);
 		return (false);
 	}
-	new_node->value = ft_strdup(value);
+	new_node->value = value;
 	if (!new_node->value)
 	{
 		free((void *)new_node->key);
