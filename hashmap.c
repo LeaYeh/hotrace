@@ -2,12 +2,20 @@
 #include <stdio.h>
 #include <string.h>
 
-uint64_t hash_djb2(const char *str, size_t len) {
-    uint64_t hash = 5381;
+uint32_t	convert_hash(uint32_t hash)
+{
+	uint32_t	mask;
+
+	mask = (1 << MAX_HASH_SIZE) - 1;
+	return (hash & mask);
+}
+
+uint32_t hash_djb2(const char *str, size_t len) {
+    uint32_t hash = 5381;
     for (size_t i = 0; i < len; i++) {
         hash = ((hash << 5) + hash) + str[i];
     }
-    return hash;
+    return (convert_hash(hash));
 }
 
 h_table *hash_table_create(uint32_t size, hash_function *f) {
@@ -114,7 +122,7 @@ void hash_table_print(h_table *ht) {
 }
 
 int main() {
-    h_table *ht = hash_table_create(10, hash_djb2);
+    h_table *ht = hash_table_create(MAX_HASH_SIZE, hash_djb2);
     hash_table_insert(ht, "key1", "value1");
     hash_table_insert(ht, "key2", "value2");
     hash_table_insert(ht, "key3", "value3");
