@@ -50,7 +50,7 @@ void hash_table_destroy(h_table *ht) {
 }
 
 bool hash_table_insert(h_table *ht, const char *key, const char *value) {
-    uint64_t hash = ht->hash(key, strlen(key));
+    uint32_t hash = ht->hash(key, strlen(key));
     uint32_t index = hash % ht->size;
 
     h_node *new_node = (h_node *)malloc(sizeof(h_node));
@@ -67,7 +67,7 @@ bool hash_table_insert(h_table *ht, const char *key, const char *value) {
 }
 
 void *hash_table_lookup(h_table *ht, const char *key) {
-    uint64_t hash = ht->hash(key, strlen(key));
+    uint32_t hash = ht->hash(key, strlen(key));
     uint32_t index = hash % ht->size;
 
     h_node *current = ht->elements[index];
@@ -82,7 +82,7 @@ void *hash_table_lookup(h_table *ht, const char *key) {
 }
 
 void *hash_table_delete(h_table *ht, const char *key) {
-    uint64_t hash = ht->hash(key, strlen(key));
+    uint32_t hash = ht->hash(key, strlen(key));
     uint32_t index = hash % ht->size;
 
     h_node *current = ht->elements[index];
