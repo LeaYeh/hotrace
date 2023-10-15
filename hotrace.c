@@ -6,7 +6,7 @@
 /*   By: iengels <iengels@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:33 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 19:52:05 by iengels          ###   ########.fr       */
+/*   Updated: 2023/10/15 19:54:13 by iengels          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,6 @@ void	search(t_table **ht)
 	}
 }
 
-
-
-
 int	main(void)
 {
 	t_table	*ht;
@@ -98,6 +95,5 @@ int	main(void)
 	if (!build_hashmap(&ht))
 		return (-1);
 	search(&ht);
-	printf("Collisions: %i\n" ,count_collisions(ht));
 	hash_table_destroy(ht);
 }
