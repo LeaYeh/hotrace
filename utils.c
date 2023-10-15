@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/15 15:37:59 by lyeh              #+#    #+#             */
+/*   Updated: 2023/10/15 15:55:09 by lyeh             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "hotrace.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t len)
@@ -47,4 +59,11 @@ void	save_free(void **f)
 		free(*f);
 		*f = NULL;
 	}
+}
+
+bool	is_empty(char *str)
+{
+	if (str && *str == '\n')
+		return (true);
+	return (false);
 }

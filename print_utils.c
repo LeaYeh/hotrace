@@ -2,7 +2,7 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, 1);
+	(void)write(fd, &c, 1);
 }
 
 void	ft_putstr_fd(char *s, int fd)
@@ -16,9 +16,9 @@ void	remove_last_newline(char **s)
 
 	len = ft_strlen(*s);
 	if (*s == NULL || **s == '\0')
-		return ; // Handle empty string or NULL pointer
+		return ;
 	if (len > 0 && (*s)[len - 1] == '\n')
 	{
-		(*s)[len - 1] = '\0'; // Set the last character to NULL
+		(*s)[len - 1] = '\0';
 	}
 }
