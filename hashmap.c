@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashmap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iengels <iengels@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: iengels <iengels@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:12 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 19:52:40 by iengels          ###   ########.fr       */
+/*   Updated: 2023/10/15 22:19:56 by iengels          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	*hash_table_lookup(t_table *ht, char *key)
 	{
 		while (current)
 		{
-			if ((current->og_hash == og_hash && ft_strncmp(key, current->key,
+			if ((current->og_hash == og_hash && *key == *current->key && ft_strncmp(key, current->key,
 						ft_strlen(current->key)) == 0))
 				return ((void *)current->value);
 			current = current->next;
