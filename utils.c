@@ -3,32 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iengels <iengels@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: iengels <iengels@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:59 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 19:57:40 by iengels          ###   ########.fr       */
+/*   Updated: 2023/10/15 21:58:17 by iengels          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t len)
+void    *ft_memcpy(void *dst, const void *src, size_t len)
 {
-	size_t				i;
-	unsigned char		*dst_ptr;
-	const unsigned char	*src_ptr;
-
-	if (len == 0 || dst == src)
-		return (dst);
-	i = 0;
-	dst_ptr = dst;
-	src_ptr = src;
-	while (i < len)
-	{
-		dst_ptr[i] = src_ptr[i];
-		i++;
-	}
-	return (dst_ptr);
+    size_t                i;
+    unsigned char        *dst_ptr;
+    const unsigned char    *src_ptr = src;
+    
+    dst_ptr = dst;
+    if (len == 0 || dst == src) {
+        return dst;
+    }
+    i = 0;
+    while ( i < len >> 3) 
+    {     
+        *(uint64_t*)(dst_ptr + (i << 3)) = *(const uint64_t*)(src_ptr +( i << 3));
+        i++;
+    }
+    i = i << 3;
+    while (i < len)
+    {
+        dst_ptr[i] = src_ptr[i];
+        i++;
+    }
+    return dst;
 }
 
 void	*ft_memset(void *dst, int val, size_t len)
