@@ -8,6 +8,22 @@ uint32_t	convert_hash(uint64_t hash)
 	return ((uint32_t)(hash & mask));
 }
 
+// uint64_t	hash_djb2(const char *data)
+// {
+// 	const uint64_t	FNV_PRIME = 1099511628211ULL;
+// 	const uint64_t	FNV_OFFSET_BASIS = 14695981039346656037ULL;
+// 	uint64_t		hash;
+
+// 	hash = FNV_OFFSET_BASIS;
+// 	while (*data != '\0')
+// 	{
+// 		hash ^= (uint64_t)*data;
+// 		hash *= FNV_PRIME;
+// 		data++;
+// 	}
+// 	return (hash);
+// }
+
 uint64_t	hash_djb2(const char *str)
 {
 	uint32_t	hash;
@@ -104,13 +120,18 @@ void	*hash_table_lookup(t_table *ht, char *key)
 	index = convert_hash(og_hash);
 	current = ht->elements[index];
 	// printf("\tindex: %d\n", index);
-	while (current)
+	if (current && !current->next)
+		return ((void *)current->value);
+	else
 	{
-		// printf("\tcompare %s\n", current->key);
-		if (!current->next || (current->og_hash == og_hash && ft_strncmp(key,
-					current->key, ft_strlen(current->key)) == 0))
-			return ((void *)current->value);
-		current = current->next;
+		while (current)
+		{
+			// printf("\tcompare %s\n", current->key);
+			if ((current->og_hash == og_hash && ft_strncmp(key, current->key,
+						ft_strlen(current->key)) == 0))
+				return ((void *)current->value);
+			current = current->next;
+		}
 	}
 	return (NULL);
 }

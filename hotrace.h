@@ -4,7 +4,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 4096
 # endif
 
 # include <stdbool.h>
@@ -15,8 +15,8 @@
 
 # include <stdio.h>
 
-# define MAX_HASH_BITS 16
-# define MAX_HASH_LEN 65536
+# define MAX_HASH_BITS 24
+# define MAX_HASH_LEN 16777216
 
 typedef uint64_t		t_hash_function(const char *);
 

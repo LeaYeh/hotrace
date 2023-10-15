@@ -62,7 +62,7 @@ void	search(t_table **ht)
 		if (value)
 		{
 			ft_putstr_fd(value, STDOUT_FILENO);
-			save_free((void**)&key);
+			save_free((void **)&key);
 		}
 		else
 		{
@@ -71,20 +71,55 @@ void	search(t_table **ht)
 				ft_putchar_fd(key[i++], STDOUT_FILENO);
 			ft_putstr_fd(": Not found.\n", STDOUT_FILENO);
 		}
-		save_free((void**)&key);
+		save_free((void **)&key);
 	}
 }
 
-void hash_table_print(t_table *ht) {
-    for (uint32_t i = 0; i < ht->size; i++) {
-        printf("Bucket %d:\n", i);
+void	hash_table_print(t_table *ht)
+{
+	t_node	*current;
+
+	for (uint32_t i = 0; i < ht->size; i++)
+	{
+		printf("Bucket %d:\n", i);
+		current = ht->elements[i];
+		while (current)
+		{
+			printf("  Key: %s, Value: %s\n", current->key, current->value);
+			current = current->next;
+		}
+	}
+}
+
+int count_collisions(const t_table *ht) {
+
+    int collision_count = 0;
+
+    for (int i = 0; i < MAX_HASH_LEN; i++) {
         t_node *current = ht->elements[i];
+        uint64_t og_hash = 0;
+        int count = 0;
+
         while (current) {
-            printf("  Key: %s, Value: %s\n", current->key, current->value);
+            if (current->og_hash == og_hash) {
+                count++;
+                if (count > 1) {
+                    collision_count++; // Increment collision count
+                }
+            } else {
+                og_hash = current->og_hash;
+                count = 1;
+            }
+
             current = current->next;
         }
     }
+
+    return collision_count;
 }
+
+
+
 
 int	main(void)
 {
@@ -95,6 +130,7 @@ int	main(void)
 	// hash_table_print(ht);
 	// printf("=======\n\n");
 	search(&ht);
+	printf("Collisions: %i\n" ,count_collisions(ht));
 	hash_table_destroy(ht);
 }
 // [mac|MAX_HASH_BITS=10] ./hotrace < tests/test07.htr  35.27s user 20.26s system 98% cpu 56.131 total
