@@ -19,7 +19,7 @@ TEST_OBJS	= 	${TEST_SRCS:.c=.o}
 CC		= 	cc
 RM		= 	rm -f
 
-CFLAGS	= 	-Wall -Wextra -Werror -g
+CFLAGS	= 	-Wall -Wextra -Werror -Ofast
 TEST_CFLAGS	= 	-Wall -Wextra -Werror -O3 -flto -march=native -ffast-math
 
 .c.o:
