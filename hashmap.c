@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:12 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 16:46:16 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/15 19:39:12 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,17 @@ void	*hash_table_lookup(t_table *ht, char *key)
 	og_hash = ht->hash(key);
 	index = convert_hash(og_hash);
 	current = ht->elements[index];
-	while (current)
+	if (current && !current->next)
+		return ((void *)current->value);
+	else
 	{
-		if (!current->next || (current->og_hash == og_hash && ft_strncmp(key,
-					current->key, ft_strlen(current->key)) == 0))
-			return ((void *)current->value);
-		current = current->next;
+		while (current)
+		{
+			if ((current->og_hash == og_hash && ft_strncmp(key, current->key,
+						ft_strlen(current->key)) == 0))
+				return ((void *)current->value);
+			current = current->next;
+		}
 	}
 	return (NULL);
 }

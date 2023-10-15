@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:24 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 15:58:27 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/15 19:38:47 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	ft_putchar_fd(char c, int fd)
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	while (s && *s)
-		ft_putchar_fd(*(s++), fd);
+	write(fd, s, ft_strlen(s));
 }
 
 void	remove_last_newline(char **s)
