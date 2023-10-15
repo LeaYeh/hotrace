@@ -7,7 +7,7 @@ void	ft_putchar_fd(char c, int fd)
 void	ft_putstr_fd(char *s, int fd)
 {
 	while (s && *s)
-		ft_putchar_fd(*(s++), fd);
+		write(fd, (s++), 1);
 }
 
 void	remove_last_newline(char **s)

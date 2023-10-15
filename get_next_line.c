@@ -40,24 +40,30 @@ char	*_update_buf(char *buf_save)
 
 char	*_extract_one_line(char *buf_save)
 {
-	char			*line;
-	int				len;
-	unsigned long	addr_newline;
+	char	*line;
+	int		len;
+	char	*addr_newline;
 
 	if (!buf_save || *buf_save == '\0')
-		return (NULL);
-	addr_newline = (unsigned long)ft_strchr(buf_save, '\n');
-	if (!addr_newline)
-		return (ft_strdup(buf_save));
-	len = (int)(addr_newline - (unsigned long)buf_save + 1);
-	line = (char *)malloc(sizeof(char) * len + 1);
-	if (!line)
-		return (NULL);
-	line[len--] = '\0';
-	while (len >= 0)
 	{
-		line[len] = buf_save[len];
+		return (NULL);
+	}
+	addr_newline = ft_strchr(buf_save, '\n');
+	if (!addr_newline)
+	{
+		return (ft_strdup(buf_save));
+	}
+	len = addr_newline - buf_save;
+	line = (char *)malloc(len + 1);
+	if (!line)
+	{
+		return (NULL);
+	}
+	line[len] = '\0';
+	while (len > 0)
+	{
 		len--;
+		line[len] = buf_save[len];
 	}
 	return (line);
 }

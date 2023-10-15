@@ -3,7 +3,7 @@
 
 bool	is_empty(char *str)
 {
-	if (str && *str == '\n')
+	if (str && *str == '\0')
 		return (true);
 	return (false);
 }
@@ -51,50 +51,80 @@ bool	build_hashmap(t_table **ht)
 
 void	search(t_table **ht)
 {
-	int		i;
 	char	*key;
 	char	*value;
 
 	while (gnl(STDIN_FILENO, &key))
 	{
-		// printf("searching key: %s", key);
+		// printf("searching key: :%s:\n", key);
 		value = (char *)hash_table_lookup(*ht, key);
 		if (value)
 		{
 			ft_putstr_fd(value, STDOUT_FILENO);
-			save_free((void**)&key);
+			ft_putchar_fd('\n', 1);
+			save_free((void **)&key);
 		}
 		else
 		{
-			i = 0;
-			while (key[i] && key[i] != '\n')
-				ft_putchar_fd(key[i++], STDOUT_FILENO);
+			ft_putstr_fd(key, STDOUT_FILENO);
 			ft_putstr_fd(": Not found.\n", STDOUT_FILENO);
 		}
-		save_free((void**)&key);
+		save_free((void **)&key);
 	}
 }
 
-void hash_table_print(t_table *ht) {
-    for (uint32_t i = 0; i < ht->size; i++) {
-        printf("Bucket %d:\n", i);
-        t_node *current = ht->elements[i];
-        while (current) {
-            printf("  Key: %s, Value: %s\n", current->key, current->value);
+void	hash_table_print(t_table *ht)
+{
+	t_node	*current;
+
+	for (uint32_t i = 0; i < ht->size; i++)
+	{
+		printf("Bucket %d:\n", i);
+		current = ht->elements[i];
+		while (current)
+		{
+			printf("  Key: %s, Value: %s\n", current->key, current->value);
+			current = current->next;
+		}
+	}
+}
+
+#include <time.h>
+
+int countCollisions(t_table* ht, size_t max_size) {
+    int collisions = 0;
+    int size = (max_size < ht->size) ? max_size : ht->size; // Ensure we don't go beyond the maximum size
+    for (int i = 0; i < size; i++) {
+        int count = 0;
+        t_node* current = ht->elements[i];
+        while (current != NULL) {
+            count++;
             current = current->next;
         }
+        if (count > 1) {
+            collisions += count - 1;
+        }
     }
+    return collisions;
 }
 
 int	main(void)
 {
 	t_table	*ht;
+	double	cpu_time_used;
 
+	clock_t start, end;
 	if (!build_hashmap(&ht))
 		return (-1);
+	printf("Collisions: %i\n", countCollisions(ht, MAX_HASH_LEN));
+	start = clock();
 	// hash_table_print(ht);
 	// printf("=======\n\n");
-	search(&ht);
+	// hash_table_print(ht);
+	//search(&ht);
+	end = clock(); // Record the end time
+	cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+	printf("Time taken: %f seconds\n", cpu_time_used);
 	hash_table_destroy(ht);
 }
 // [mac|MAX_HASH_BITS=10] ./hotrace < tests/test07.htr  35.27s user 20.26s system 98% cpu 56.131 total
