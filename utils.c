@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:59 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 15:55:09 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/15 21:58:52 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,25 @@ void	*ft_memcpy(void *dst, const void *src, size_t len)
 {
 	size_t				i;
 	unsigned char		*dst_ptr;
-	const unsigned char	*src_ptr;
+	const unsigned char	*src_ptr = src;
 
+	dst_ptr = dst;
 	if (len == 0 || dst == src)
 		return (dst);
 	i = 0;
-	dst_ptr = dst;
-	src_ptr = src;
+	while (i < len >> 3)
+	{
+		*(uint64_t*)(dst_ptr + (i << 3)) = \
+			*(const uint64_t*)(src_ptr + (i << 3));
+		i++;
+	}
+	i = i << 3;
 	while (i < len)
 	{
 		dst_ptr[i] = src_ptr[i];
 		i++;
 	}
-	return (dst_ptr);
+	return (dst);
 }
 
 void	*ft_memset(void *dst, int val, size_t len)
