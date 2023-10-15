@@ -32,12 +32,16 @@ bool	build_hashmap(t_table **ht)
 	{
 		if (is_empty(line))
 		{
-			free(line);
+			save_free((void **)&line);
 			break ;
 		}
 		key = line;
 		if (!gnl(STDIN_FILENO, &line) || is_empty(line))
+		{
+			save_free((void **)&key);
+			save_free((void **)&line);
 			return (true);
+		}
 		value = line;
 		// printf("insert %s: %s\n", key, value);
 		hash_table_insert(*ht, key, value);
