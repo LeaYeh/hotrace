@@ -6,7 +6,7 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:42:13 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 15:55:05 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/15 20:48:49 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ uint32_t	convert_hash(uint64_t hash)
 
 uint64_t	hash_djb2(const char *str)
 {
-	uint32_t	hash;
+	uint64_t		hash;
+	const uint64_t	prime = 0x00000100000001B3;
 
-	hash = 5381;
+	hash = 0xcbf29ce484222325;
 	while (*str)
 	{
-		hash = ((hash << 5) + hash) + (*str);
-		str++;
+		hash ^= (uint64_t)(*str++);
+		hash *= prime;
 	}
 	return (hash);
 }
