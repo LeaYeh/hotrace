@@ -6,12 +6,11 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:33 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 16:35:21 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/15 19:50:27 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hotrace.h"
-#include <stdio.h>
 
 bool	gnl(int fd, char **line)
 {

@@ -6,27 +6,29 @@
 /*   By: lyeh <lyeh@student.42vienna.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:37:41 by lyeh              #+#    #+#             */
-/*   Updated: 2023/10/15 16:33:33 by lyeh             ###   ########.fr       */
+/*   Updated: 2023/10/15 19:53:05 by lyeh             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HOTRACE_H
 # define HOTRACE_H
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdbool.h>
-# include <stddef.h>
-# include <stdint.h>
-# include <stdlib.h>
-# include <unistd.h>
+
+/* for perror */
 # include <stdio.h>
+/* for malloc, free */
+# include <stdlib.h>
+/* for write */
+# include <unistd.h>
+/* for uintxx_t */
+# include <stdint.h>
+# include <stdbool.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 2048
 # endif
 
-# define MAX_HASH_BITS 8
-# define MAX_HASH_LEN 256
+# define MAX_HASH_BITS 24
+# define MAX_HASH_LEN 16777216
 
 typedef uint64_t		t_hash_function(const char *);
 
