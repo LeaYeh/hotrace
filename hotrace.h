@@ -18,31 +18,32 @@
 # define MAX_HASH_BITS 16
 # define MAX_HASH_LEN 65536
 
-typedef					uint32_t(hash_function)(const char *);
+typedef uint64_t		t_hash_function(const char *);
 
 typedef struct hash_node
 {
 	const char			*key;
 	const char			*value;
+	uint64_t			og_hash;
 	struct hash_node	*next;
 }						t_node;
 
 typedef struct hash_table
 {
 	uint32_t			size;
-	hash_function		*hash;
+	t_hash_function		*hash;
 	t_node				**elements;
 
 }						t_table;
 
-t_table					*hash_table_create(uint32_t size, hash_function *f);
+t_table					*hash_table_create(uint32_t size, t_hash_function *f);
 void					hash_table_destroy(t_table *ht);
 void					hash_table_print(t_table *ht);
 bool					hash_table_insert(t_table *ht, const char *key,
 							const char *value);
 void					*hash_table_lookup(t_table *ht, char *key);
 void					*hash_table_delete(t_table *ht, const char *key);
-uint32_t				hash_djb2(const char *str);
+uint64_t				hash_djb2(const char *str);
 
 void					*ft_calloc(size_t count, size_t size);
 void					*ft_memset(void *dst, int val, size_t len);
